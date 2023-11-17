@@ -1,0 +1,66 @@
+{% extends "../superAdmin/basesuadmin.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+
+    <link rel="stylesheet" href="{% static 'css/superAdmin/styleEditarPrestamo.css' %}">
+    <title>Formulario Editar Prestamos</title>
+
+</head>
+
+<section class="section">
+
+    <!-- Inicio del Forumlario-->
+
+
+    <div class="signupFrm">
+        <form action="" class="form">
+            <h1 class="title">Editar Prestamo</h1>
+
+            <div class="container-1">
+                <div class="fechaContainer">
+                    <input type="date" class="inputform" placeholder="fechaEntrega" name="fechaentrega" required>
+                    <label for="fechaEntrega" class="labelform">Fecha Entrega</label>
+                </div>
+                <div class="fechaContainer">
+                    <input type="date" class="inputform" placeholder="fechaDevolucion" name="fechadevolucion" required>
+                    <label for="fechaDevolucion" class="labelform">Fecha Devoluc</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="©" name="elementoSerial" required>
+                    <label for="elementoSerial" class="labelform">Serial Elemento</label>
+                </div>
+
+            </div>
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="usuarioSena" required>
+                    <label for="usuarioSena" class="labelform">Nombre Instructor</label>
+                </div>
+
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="observacionesPrestamo" required>
+                    <label for="observacionesPrestamo" class="labelform">Observaciones</label>
+                </div>
+                <div class="selectorimagen">
+                    <input type="file" accept="image/*" class="inputsubirfoto">
+                    <label for="soporte" class="labelsubirfoto">Firma Digital</label>
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="container-botones">
+                    <button type="submit" class="submitBtn">GUARDAR</button>
+                    <button type="" class="submitBtn">CANCELAR</button>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "../superAdmin/basesuadmin.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+
+    <link rel="stylesheet" href="{% static 'css/superAdmin/crearPrestamo.css' %}">
+    <title>Formulario Prestamos</title>
+</head>
+
+<section class="section" style=" margin: 10px; padding: 10px">
+
+    <!-- Inicio del Forumlario-->
+
+    <div class="signupFrm">
+        <form action="/formPrestamosDevolutivos/" class="form" method="post">
+            <h1 class="title">Crear Prestamo Devolutivo</h1>
+
+            {% csrf_token %}
+
+            <div class="container-1">
+                <input type="text" name="estadoPrestamo" value="Vigente" required hidden readonly>
+                <div class="fechaContainer">
+                    <input type="date" class="inputform" placeholder="fechaDevolucion" name="fechaDevolucion" required>
+                    <label for="fechaDevolucion" class="labelform">Fecha Devolución</label>
+                </div>
+                <div class="inputContainer">
+                    <input list="usuariosList" type="text" class="inputform" placeholder="nombreEntrega"
+                        name="nombreEntrega" autocomplete="off" required>
+                    <label for="" class="labelform">Instructor Entrega</label>
+                    <datalist id="usuariosList">
+                        {% for usuario in usuarios %}
+                        <option value="{{ usuario.nombres }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+                <div class="inputContainer">
+                    <input list="usuariosListRecibe" type="text" class="inputform" placeholder="nombreRecibe"
+                        name="nombreRecibe" autocomplete="off" required>
+                    <label for="" class="labelform">Instructor Recibe</label>
+                    <datalist id="usuariosListRecibe">
+                        {% for usuario in usuarios %}
+                        <option value="{{ usuario.nombres }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input list="elementosList" type="text" class="inputform" placeholder="nombreElemento"
+                        name="nombreElemento" autocomplete="off" required>
+                    <label for="" class="labelform">Nombre Elemento</label>
+                    <datalist id="elementosList">
+                        {% for elemento, Serial in elementos %}
+                        <option value="{{ elemento }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+                <div class="inputContainer">
+                    <input list="serialesList" type="text" class="inputform" placeholder="serialSenaElemento"
+                        name="serialSenaElemento" autocomplete="off" required>
+                    <label for="" class="labelform">Serial Elemento</label>
+                    <datalist id="serialesList">
+                        {% for elemento, serial in elementos %}
+                        <option value="{{ serial }}">
+                            {% endfor %}
+                    </datalist>
+                </div>
+                <div class="inputContainervalor">
+                    <input type="text" class="inputform" placeholder="Disponibles" name="disponibles"
+                        id="campoDisponibles" readonly>
+                    <label for="cantidadElemento" class="labelform">Disponibles</label>
+                </div>
+                <div class="selectContainer">
+                    <input type="number" class="inputcantidad" name="cantidadElemento" id="cantidadElemento">
+                    <label for="cantidadElemento" class="labelcantidad">Cantidad</label>
+                </div>
+
+            </div>
+            <div class="container-1">
+                <div class="inputContainervalor">
+                    <input type="text" class="inputform" placeholder="a" name="valorUnidadElemento" id="valorUnidad"
+                        readonly>
+                    <label for="valorUnidadElemento" class="labelform">Valor Unidad</label>
+                </div>
+                <div class="inputContainervalor">
+                    <input type="text" class="inputform" placeholder="a" name="valorTotalElemento"
+                        id="valorTotalElemento" readonly>
+                    <label for="valorTotalElemento" class="labelform">Valor Total</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="observacionesPrestamo" required>
+                    <label for="" class="labelform">Observaciones</label>
+                </div>
+                <div class="selectorimagen">
+                    <label for="soporte" class="labelsubirfoto">Firma Digital</label>
+                    <input type="file" accept="image/*" class="inputsubirfoto">
+
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="container-botones">
+                    <button type="submit" class="submitBtn">GUARDAR</button>
+                    <button type="" class="submitBtn">CANCELAR</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% block extrajs %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="{% static 'js/rellenarCampos.js'%}"></script>
+<script src="{% static 'js/calculoTotal.js'%}"></script>
+{% endblock extrajs %}
+{% endblock %}

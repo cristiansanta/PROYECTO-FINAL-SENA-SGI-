@@ -1,0 +1,82 @@
+{% extends "../superAdmin/basesuadmin.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/superAdmin/styledashboard.css' %}">
+{% endblock extrastyle %}
+
+
+
+{% block title %}
+Home SUAdmin
+{% endblock title %}
+
+
+<!-- Cotenido principal -->
+
+{% block content %}
+
+
+
+<main>
+    <div class="dashboard_home_principal">
+        <div class="titulo_home">
+            <h1>Home</h1>
+        </div>
+        <div class="dashboard_home">
+
+            <div class="box-home usuarios_home">
+                <div class="color_icono_usuario">
+                    <span class="material-icons-sharp">
+                        person
+                    </span>
+                </div>
+                <h1>Usuarios</h1>
+            </div>
+            <div class="box-home inventario_home">
+                <div class="color_icono_inventario">
+                    <span class="material-icons-sharp">
+                        inventory
+                    </span>
+                </div>
+                <h1>Inventario</h1>
+            </div>
+            <div class="box-home calendario_home">
+                <div class="color_icono_calendario">
+                    <span class="material-icons-sharp">
+                        calendar_month
+                    </span>
+                </div>
+                <h1>Calendario</h1>
+            </div>
+            <div class="box-home elementos_home">
+                <div class="color_icono_elemento">
+                    <span class="material-icons-sharp">
+                        interests
+                    </span>
+                </div>
+                <h1>Elementos</h1>
+            </div>
+        </div>
+        <div class="titulo_home">
+            <h1>Porcentual</h1>
+        </div>
+        <div class="Porcentual">
+            <nav class="enlaces_home">
+                <a href="#">Usuarios</a>
+                <a href="#">Inventario</a>
+                <a href="#">Calendario</a>
+                <a href="#">Elementos</a>
+            </nav>
+        </div>
+    </div>
+
+</main>
+<!-- fin Cotenido principal -->
+
+{% endblock %}
+
+
+{% block extrajs %}
+
+{% endblock extrajs %}

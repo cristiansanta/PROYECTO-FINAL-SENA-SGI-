@@ -1,0 +1,213 @@
+{% extends '../superAdmin/basesuadmin.html' %}
+
+{% load static %}
+
+{% block title %}
+Consultar Elementos
+{% endblock title %}
+
+
+<!--Script Contenido Estilos de Tailwindcss-->
+
+{% block extrastyle %}
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock extrastyle %}
+
+{% block content %}
+
+<!--Contenedor principal de todo el contenido -->
+
+<section class="container  rounded-lg p-4 overflow-hidden m-2 ">
+
+  <h1 class="text-[2.5rem] m-2 mb-16 font-extrabold text-center">Consultar Elementos</h1>
+
+  <!--Barra de Busqueda-->
+
+
+  <div class="flex mb-10 items-center w-full h-[1rem] border-l border-gray max-w-md " x-data="{ search: '' }">
+    <div class="w-full ">
+      <input type="search" class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none" id="filtroEdad"
+        placeholder="Filtrar por: Nombre... Apellido... correo... " onkeyup="filtrarTabla()" x-model="search">
+    </div>
+    <div>
+      <button type="submit" class="flex items-center bg-[#fc7323] justify-center w-12 h-12 text-white rounded-r-lg"
+        :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
+        :disabled="search.length == 0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="flex flex-col max-w-full overflow-x-auto mt-8">
+    <div class="py-2 -my-2  sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block scroll-auto overflow-hidden align-middle sm:rounded-lg">
+
+        <!--Datatable se crea tabla con scrool maximo del conrenedor disponible, con 12 enunciados en la cabecera-->
+        <table class="table-auto  overflow-scroll-hidden w-full" id="tablaPersonas">
+          <thead>
+            <tr>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Fecha</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Nombre</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Categoría</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Estado</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Cant</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Vlr Unid</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Vlr Total</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Descripción</th>
+              <th
+                class="px-2 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Observación</th>
+              <th
+                class="px-6 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+                Factura</th>
+              <th
+                class="px-6 py-1 text-xs font-semibold leading-4 tracking-wider text-center text-black-500 uppercase border-b border-gray-200 bg-orange-50">
+              </th>
+
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            {% for elemento in elementos %}
+            <tr>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">{{ elemento.fechaElemento }}
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">{{ elemento.nombreElemento }}
+
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+
+                {% if elemento.categoriaElemento == 'C' %}
+                <span
+                  class="text-center inline-flex px-2 text-[0.7rem] font-semibold leading-5 text-blue-800 bg-blue-100 rounded-full">
+                  Consumible</span>
+
+                {% elif elemento.categoriaElemento == 'D' %}
+                <span
+                  class="text-center inline-flex px-2 text-[0.7rem] font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                  Devolutivo</span>
+
+                {% endif %}
+
+              </td>
+
+              <td class=" px-3 py-2 whitespace-no-wrap  border-b border-gray-200">
+                {% if elemento.estadoElemento == 'D' %}
+                <span
+                  class="inline-flex px-2 text-[0.6rem] font-medium leading-5 text-green-800 bg-green-100 rounded-full">Disponible</span>
+
+                {% elif elemento.estadoElemento == 'G' %}
+                <span
+                  class="inline-flex px-2 text-[0.6rem] font-medium leading-5 text-yellow-800 bg-yellow-100 rounded-full">Garantia</span>
+
+                {% elif elemento.estadoElemento == 'B' %}
+                <span
+                  class="inline-flex px-2 text-[0.6rem] font-medium leading-5 text-orange-800 bg-orange-100 rounded-full">Baja</span>
+                {% endif %}
+
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">{{ elemento.cantidadElemento }}
+
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">${{ elemento.valorUnidadElemento }}
+
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">${{ elemento.valorTotalElemento }}
+
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">{{ elemento.descripcionElemento }}
+
+                </div>
+              </td>
+              <td class=" truncate px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.7rem] leading-5 text-gray-500">{{ elemento.observacionElemento }}
+
+                </div>
+              </td>
+
+              <td
+                class=" text-ellipsis w-3/2 overflow-hidden ... px-3 py-2 whitespace-no-wrap border-b border-gray-200">
+                <div class="text-[0.3rem] leading-5 text-gray-500">{{ elemento.facturaElemento }}
+
+                </div>
+              </td>
+
+              <td
+                class="flex  px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-l border-gray-200 gap-2">
+                <button><svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 64 64"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="m62 32s-10.1 20-30 20-30-20-30-20 10.1-20 30-20 30 20 30 20" fill="#231f20" />
+                    <path d="m57 32s-8.4 16.7-25 16.7-25-16.7-25-16.7 8.4-16.7 25-16.7 25 16.7 25 16.7z" fill="#fff" />
+                    <path d="m45.4 32c0 7.5-6 13.5-13.5 13.5s-13.5-6-13.5-13.5 6-13.5 13.5-13.5 13.5 6 13.5 13.5"
+                      fill="#42ade2" />
+                    <path d="m39.4 32c0 4.1-3.4 7.5-7.5 7.5s-7.5-3.4-7.5-7.5 3.4-7.5 7.5-7.5 7.5 3.4 7.5 7.5"
+                      fill="#231f20" />
+                  </svg>
+                </button>
+                <button onclick="editarFila(this)"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg></button>
+                <!--<button  class="eliminarElemento" data-id="{{ elemento.id }}"> Eliminar por medio de JS-->
+                <a href="{% url 'eliminarElemento' id=elemento.id %}"><svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg></a>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="flex w-20 gap-4 justify-end">
+          <a href="{% url 'generar_pdf' %}" class="btn btn-primary"><img src="{% static 'img/pdf.png' %}" alt=""></a>
+          <a href="{% url 'generar_excel' %}" class="btn btn-primary"><img src="{% static 'img/excel.png' %}"
+              alt=""></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+{% block extrajs %}
+<script src="{% static 'js/scriptConsultarUsuario.js' %}"></script>
+
+
+{% endblock extrajs %}
+
+{% endblock %}

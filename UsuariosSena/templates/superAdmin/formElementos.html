@@ -1,0 +1,94 @@
+{% extends '../superAdmin/basesuadmin.html' %}
+
+{% load static %}
+{% block content %}
+
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/superAdmin/stylesFormElem.css' %}">
+    <title>Formulario Registro Usuarios</title>
+
+</head>
+
+<section class="" style=" margin: 10px; padding: 40px">
+
+    <!-- Inicio del Forumlario-->
+
+
+    <div class="signupFrm">
+        <form action="/formElementos/" class="form" method="post">
+            <h1 class="title">Registrar Elemento</h1>
+            {% csrf_token %}
+
+
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="Nombre" name="nombreElemento" required>
+                    <label for="nombreElemento" class="labelform">Nombre</label>
+                </div>
+                <div class="selectContainer">
+                    <label for="categoriaElemento" class="labelformselect">Categoria</label>
+                    <div>
+                        <select class="selector" name="categoriaElemento" id="categoriaElemento">
+                            <option value="D">Devolutivo</option>
+                            <option value="C">Consumible</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="selectContainer">
+                    <label for="estadoElemento" class="labelformselect">Estado</label>
+                    <div>
+                        <select class="selector" name="estadoElemento" id="estadoElemento">
+                            <option value="D">Disponible</option>
+                            <option value="G">Garantia</option>
+                            <option value="B">Baja</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="selectContainer">
+                    <input type="number" class="inputcantidad" name="cantidadElemento" id="cantidadElemento">
+                    <label for="cantidadElemento" class="labelcantidad">Cantidad</label>
+                </div>
+                <div class="inputContainervalor">
+                    <input type="text" class="inputformvalor" placeholder="a" name="valorUnidadElemento"
+                        id="valorUnidad">
+                    <label for="valorUnidadElemento" class="labelformvalor">Valor Unidad</label>
+                </div>
+                <div class="inputContainervalor">
+                    <input type="text" class="inputformvalor" placeholder="a" name="valorTotalElemento"
+                        id="valorTotalElemento">
+                    <label for="valorTotalElemento" class="labelformvalor">Valor Total</label>
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="serialSenaElemento" required>
+                    <label for="serialSenaElemento" class="labelform">Serial Sena ####</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="descripcionElemento" required>
+                    <label for="descripcionElemento" class="labelform">Descripción</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="observacionElemento" required>
+                    <label for="observacionElemento" class="labelform">Observaciones</label>
+                </div>
+                <div class="selectorimagen">
+                    <input type="file" accept="image/*" class="inputsubirfoto" name="facturaElemento">
+                    <label for="facturaElemento" class="labelsubirfoto">Adjuntar Soporte</label>
+
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="container-botones">
+                    <button type="submit" class="submitBtn">GUARDAR</button>
+                    <button type="" class="submitBtn">CANCELAR</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script src="{% static 'js/calculoTotal.js'%}"></script>
+{% endblock %}

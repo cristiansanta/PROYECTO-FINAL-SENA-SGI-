@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Roboto:wght@100&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+.cabeza {
+    width: 100vw;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    font-size: 0.88rem;
+    user-select: none;
+    background-color: #efefef;
+    height: 80vh;
+    overflow-x: hidden;
+
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 120px;
+    align-items: center;
+    background: #fff;
+    box-shadow: 2px 5px 5px 4px #b3b3b3;
+
+}
+
+.header span {
+    display: none;
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.header span:hover {
+    transform: scale(1.1);
+}
+
+.header img {
+    width: 150px;
+}
+
+.usuario {
+    display: flex;
+    text-align: center;
+
+}
+
+.usuario img {
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 40px;
+}
+
+.usuario p {
+    font-size: 14px;
+}
+
+
+@media (max-width:768px) {
+    .header {
+        width: 100%;
+        justify-content: space-between;
+        padding: 1% 30px;
+
+
+    }
+
+    .img {
+        display: none;
+    }
+
+    .usuario {
+        margin: 30px;
+    }
+
+}
+
+
+
+/* ---------------------  Estructura base  ---------------------------- */
+/* ---------------------  Contenindo  ---------------------------- */
+
+.contenedor {
+    display: grid;
+    width: 100%;
+    align-items: center;
+    height: 85vh;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto;
+
+
+}
+
+aside {
+    height: 100%;
+    background-color: white;
+    align-items: center;
+}
+
+.contenedor-barra-lateral {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    position: relative;
+    border-radius: 10px;
+    border: 2rem;
+    height: 100%;
+    width: 100%;
+    transition: all .5s ease;
+    box-shadow: 2px 5px 5px 4px #b3b3b3;
+
+}
+
+.contenedor-barra-lateral:hover {
+    box-shadow: none;
+
+}
+
+#hambur {
+    display: none;
+}
+
+.logos {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+}
+
+.logos img {
+    width: 30px;
+    margin-right: 40px;
+}
+
+.barra-lateral {
+    margin-top: 20px;
+}
+
+
+.barra-lateral a {
+    display: flex;
+    text-decoration: none;
+    color: #676767;
+    height: 3.7rem;
+    gap: 1.7rem;
+    margin-left: 2rem;
+    font-size: 0.8rem;
+    position: relative;
+    align-items: center;
+}
+
+.barra-lateral a span {
+    font-size: 1.6rem;
+    transition: all 0.3s ease;
+}
+
+.barra-lateral a:last-child {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    color: #ff0060;
+}
+
+.barra-lateral a:last-child:hover {
+    color: #fc7323;
+}
+
+.barra-lateral a:hover {
+    color: #000;
+}
+
+.barra-lateral a:hover span {
+    margin-left: 0.6rem;
+}
+
+.barra-lateral a.active {
+    color: #000;
+    width: 100%;
+    background-color: #e7d2c5;
+    margin-left: 0;
+}
+
+.barra-lateral a.active::before {
+    content: '';
+    width: 6px;
+    height: 20px;
+    margin-left: 5px;
+    background-color: #1c1c1c;
+    border-radius: 20px;
+}
+
+
+.barra-lateral a.active span {
+    color: #1b1b1b;
+    margin-left: calc(1rem- 3px);
+}
+
+
+@media screen and (max-width:768px) {
+    #hambur {
+        display: flex;
+    }
+
+    .contenedor {
+        width: 100%;
+        grid-template-columns: none;
+
+    }
+
+    .aside {
+        border-radius: 0;
+        background-color: #ffffff;
+        z-index: 3;
+        height: 100%;
+        display: none;
+        transition: .5s ease;
+        position: fixed;
+        width: 90%;
+        top: 0;
+        left: 0;
+        z-index: 99;
+    }
+
+    .header span {
+        display: flex;
+    }
+
+    .contenedor-barra-lateral {
+        background-color: #f8f8f8;
+    }
+
+    .barra-lateral a.active {
+        width: 100%;
+    }
+
+    .barra-lateral a:hover span {
+        margin: 0;
+    }
+
+
+}
+
+main .dashboard_home {
+    display: flex;
+
+}
+
+
+.dashboard_home_principal {
+    padding: 50px;
+    margin: 20px;
+}
+
+.dashboard_home {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.box-home {
+    display: flex;
+    align-items: center;
+    padding: 1rem 3rem;
+    background-color: #eceaea;
+    border-radius: 10px;
+    box-shadow: 2px 3px 4px #9e9e9e;
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin: 30px 40px 0 0;
+    justify-content: space-around;
+}
+
+.box-home:hover {
+    box-shadow: none;
+}
+
+
+
+
+.color_icono_usuario {
+    padding: 20px;
+    background-color: rgb(84, 238, 154);
+    border-radius: 20px;
+    margin: 0 20px;
+
+}
+
+.color_icono_inventario {
+    padding: 20px;
+    background-color: rgb(245, 207, 138);
+    border-radius: 20px;
+    margin: 0 20px;
+}
+
+
+.color_icono_calendario {
+    padding: 20px;
+    background-color: rgb(107, 194, 194);
+    border-radius: 20px;
+    margin: 0 20px;
+}
+
+.color_icono_elemento {
+    padding: 20px;
+    background-color: rgb(216, 118, 167);
+    border-radius: 20px;
+    margin: 0 20px;
+}
+
+.titulo_home h1 {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+main {
+    font-size: 0.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+/* ------------------------------------------------------------- /*/
+
+.Porcentual {
+    max-width: 97%;
+    height: 350px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.Porcentual .enlaces_home a {
+    color: #000;
+    font-size: 14px;
+    padding: 10px 20px;
+    margin: 40px;
+    border-bottom: #000 solid 1px;
+}
+
+.Porcentual .enlaces_home {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+
+}

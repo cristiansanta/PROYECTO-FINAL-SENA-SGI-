@@ -1,0 +1,212 @@
+{% extends "../superAdmin/basesuadmin.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+
+    <link rel="stylesheet" href="{% static 'css/superAdmin/stylesEditarUsuario.css' %}">
+    <title>Formulario Editar Usuarios</title>
+
+</head>
+
+<section class="section">
+
+    <!-- Inicio del Forumlario-->
+
+    <div class="signupFrm">
+        <form action="/actualizarUsuario/{{user.id}}" class="form" method="post">
+            <h1 class="title">Editar Usuarios</h1>
+            {% csrf_token %}
+
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="nombre" value="{{user.nombre}}" required>
+                    <label for="" class="labelform">Nombres</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="apellidoo" value="{{user.apellidoo}}"
+                        required>
+                    <label for="" class="labelform" name="apellido">Apellidos</label>
+                </div>
+                <div class="selectContainer">
+                    <label for="tipoIdentificacion" class="labelformselect">Tipo Documento</label>
+                    <div>
+                        <select class="selector" name="tipoIdentificacion" id="tipoIdentificacion">
+                            {% if user.tipoIdentificacion == 'CC' %}
+                            <option value="CC" selected>CC</option>
+                            {% else %}
+                            <option value="CC">CC</option>
+                            {% endif %}
+
+                            {% if user.tipoIdentificacion == 'PEP' %}
+                            <option value="PEP" selected>Pasaporte</option>
+                            {% else %}
+                            <option value="PEP">Pasaporte</option>
+                            {% endif %}
+
+                            {% if user.tipoIdentificacion == 'TI' %}
+                            <option value="TI" selected>TI</option>
+                            {% else %}
+                            <option value="TI">TI</option>
+                            {% endif %}
+
+                            {% if user.tipoIdentificacion == 'O' %}
+                            <option value="O" selected>Otro</option>
+                            {% else %}
+                            <option value="O">Otro</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="numeroIdentificacion"
+                        value="{{user.numeroIdentificacion}}" required>
+                    <label for="" class="labelform" name="numeroIdentificacion">Numero Id</label>
+                </div>
+            </div>
+            <div class="container-1">
+                <div class="inputContainer">
+                    <input type="email" class="inputform" placeholder="a" name="correoSena" value="{{user.correoSena}}"
+                        required>
+                    <label for="correoSena" class="labelform">Correo Sena</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="text" class="inputform" placeholder="a" name="celular" value="{{user.celular}}"
+                        required>
+                    <label for="celular" class="labelform">Celular</label>
+                </div>
+                <div class="selectContainer">
+                    <label for="rol" class="labelformselect">Rol</label>
+                    <div>
+                        <select class="selector" name="rol" id="rol">
+
+                            {% if user.rol == 'SuperAdmin' %}
+                            <option value="SuperAdmin" selected>SuperAdmin</option>
+                            {% else %}
+                            <option value="SuperAdmin">SuperAdmin</option>
+                            {% endif %}
+
+                            {% if user.rol == 'Instructor' %}
+                            <option value="Instructor" selected>Instructor</option>
+                            {% else %}
+                            <option value="Instructor">Instructor</option>
+                            {% endif %}
+
+                            {% if user.rol == 'Monitor' %}
+                            <option value="Monitor" selected>Monitor</option>
+                            {% else %}
+                            <option value="Monitor">Monitor</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="selectContainer">
+                    <label for="cuentadante" class="labelformselect">Tipo Cuentadante</label>
+                    <div>
+                        <select class="selector" name="cuentadante" id="cuentadante">
+
+                            {% if user.cuentadante == 'adminS' %}
+                            <option value="adminS" selected>adminSolidario</option>
+                            {% else %}
+                            <option value="adminS">adminSolidario</option>
+                            {% endif %}
+                            {% if user.cuentadante == 'adminD' %}
+                            <option value="adminD" selected>adminDirecto</option>
+                            {% else %}
+                            <option value="adminD">adminDirecto</option>
+                            {% endif %}
+
+                            {% if user.cuentadante == 'monitor' %}
+                            <option value="monitor" selected>monitor</option>
+                            {% else %}
+                            <option value="monitor">monitor</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="selectContainer">
+                    <label for="tipoContrato" class="labelformselect">Tipo Contrato</label>
+                    <div>
+                        <select class="selector" name="tipoContrato" id="tipoContrato">
+
+                            {% if user.tipoContrato == 'Planta' %}
+                            <option value="Planta" selected>Planta</option>
+                            {% else %}
+                            <option value="Planta">Planta</option>
+                            {% endif %}
+
+                            {% if user.tipoContrato == 'Contratista' %}
+                            <option value="Contratista" selected>Contratista</option>
+                            {% else %}
+                            <option value="Contratista">Contratista</option>
+                            {% endif %}
+
+                            {% if user.tipoContrato == 'Aprendiz' %}
+                            <option value="Aprendiz" selected>Aprendiz</option>
+                            {% else %}
+                            <option value="Aprendiz">Aprendiz</option>
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+                <div class="selectContainer">
+                    <label for="estadoUsuario" class="labelformselect" name="estadoUsuario">Estado Usuario</label>
+                    <div>
+                        <select class="selector" name="estadoUsuario" id="estadoUsuario">
+
+                            {% if user.estadoUsuario == 'Activo' %}
+                            <option value="A" selected>Activo</option>
+                            {% else %}
+                            <option value="A">Activo</option>
+                            {% endif %}
+
+                            {% if user.estadoUsuario == 'Inactivo' %}
+                            <option value="I" selected>Inactivo</option>
+                            {% else %}
+                            <option value="I">Inactivo</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="container-1">
+                <div class="cantidadContainer">
+                    <input type="number" class="inputcantidad" name="duracionContrato" value="{{user.duracionContrato}}"
+                        id="duracionContrato">
+                    <label for="duracionContrato" class="labelcantidad">Duracion</label>
+
+                </div>
+                <div class="inputContainer">
+                    <input type="password" class="inputform" placeholder="Contraseña" name="contraSena"
+                        value="{{user.contraSena}}" required>
+                    <label for="contraSena" class="labelform">Contraseña</label>
+                </div>
+                <div class="inputContainer">
+                    <input type="password" class="inputform" placeholder="a" value="{{user.validacionContraSena}}"
+                        required>
+                    <label for="validacionContraSena" class="labelform" name="validacionContraSena">Repetir
+                        Contraseña</label>
+                </div>
+                <div class="selectorimagen">
+                    <label for="foto" class="">Adjuntar Foto</label>
+                    <input type="file" name="foto" class="inputsubirfoto">
+                </div>
+            </DIV>
+            <div class="container-botones">
+
+                <button type="submit" class="submitBtn"><span id="span">GUARDAR</span></button>
+                <button type="submit" class="submitBtn"><span>CANCELAR</span></button>
+
+            </div>
+
+        </form>
+
+    </div>
+</section>
+{% endblock %}
