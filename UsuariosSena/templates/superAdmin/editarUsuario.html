@@ -2,31 +2,34 @@
 
 {% load static %}
 
+
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/superAdmin/stylesEditarUsuario.css' %}">
+{% endblock extrastyle %}
+
+{% block title %}
+    Editar Usuarios
+{% endblock title %}
+
+
 {% block content %}
 
-<head>
-
-    <link rel="stylesheet" href="{% static 'css/superAdmin/stylesEditarUsuario.css' %}">
-    <title>Formulario Editar Usuarios</title>
-
-</head>
-
-<section class="section">
 
     <!-- Inicio del Forumlario-->
 
     <div class="signupFrm">
-        <form action="/actualizarUsuario/{{user.id}}" class="form" method="post">
+        <form action="/actualizarUsuario/{{user.numeroIdentificacion}}" class="form" method="post">
             <h1 class="title">Editar Usuarios</h1>
             {% csrf_token %}
 
             <div class="container-1">
                 <div class="inputContainer">
-                    <input type="text" class="inputform" placeholder="a" name="nombre" value="{{user.nombre}}" required>
+                    <input type="text" class="inputform" placeholder="a" name="nombre" value="{{user.nombres}}" pattern="^\S.*$" required>
                     <label for="" class="labelform">Nombres</label>
                 </div>
                 <div class="inputContainer">
-                    <input type="text" class="inputform" placeholder="a" name="apellidoo" value="{{user.apellidoo}}"
+                    <input type="text" class="inputform" placeholder="a" name="Apellidos" value="{{user.apellidos}}"
                         required>
                     <label for="" class="labelform" name="apellido">Apellidos</label>
                 </div>
@@ -69,7 +72,7 @@
             </div>
             <div class="container-1">
                 <div class="inputContainer">
-                    <input type="email" class="inputform" placeholder="a" name="correoSena" value="{{user.correoSena}}"
+                    <input type="email" class="inputform" placeholder="a" name="correoSena" value="{{user.email}}"
                         required>
                     <label for="correoSena" class="labelform">Correo Sena</label>
                 </div>
@@ -82,23 +85,18 @@
                     <label for="rol" class="labelformselect">Rol</label>
                     <div>
                         <select class="selector" name="rol" id="rol">
-
-                            {% if user.rol == 'SuperAdmin' %}
-                            <option value="SuperAdmin" selected>SuperAdmin</option>
-                            {% else %}
-                            <option value="SuperAdmin">SuperAdmin</option>
-                            {% endif %}
+                            
 
                             {% if user.rol == 'Instructor' %}
-                            <option value="Instructor" selected>Instructor</option>
+                            <option value="I" selected>Instructor</option>
                             {% else %}
-                            <option value="Instructor">Instructor</option>
+                            <option value="I">Instructor</option>
                             {% endif %}
 
                             {% if user.rol == 'Monitor' %}
-                            <option value="Monitor" selected>Monitor</option>
+                            <option value="M" selected>Monitor</option>
                             {% else %}
-                            <option value="Monitor">Monitor</option>
+                            <option value="M">Monitor</option>
                             {% endif %}
                         </select>
                     </div>
@@ -127,44 +125,48 @@
                         </select>
                     </div>
                 </div>
+
+            </div>
+            
+            <div class="container-1">
                 <div class="selectContainer">
                     <label for="tipoContrato" class="labelformselect">Tipo Contrato</label>
                     <div>
                         <select class="selector" name="tipoContrato" id="tipoContrato">
 
                             {% if user.tipoContrato == 'Planta' %}
-                            <option value="Planta" selected>Planta</option>
+                            <option value="P" selected>Planta</option>
                             {% else %}
-                            <option value="Planta">Planta</option>
+                            <option value="P">Planta</option>
                             {% endif %}
 
                             {% if user.tipoContrato == 'Contratista' %}
-                            <option value="Contratista" selected>Contratista</option>
+                            <option value="C" selected>Contratista</option>
                             {% else %}
-                            <option value="Contratista">Contratista</option>
+                            <option value="C">Contratista</option>
                             {% endif %}
 
                             {% if user.tipoContrato == 'Aprendiz' %}
-                            <option value="Aprendiz" selected>Aprendiz</option>
+                            <option value="A" selected>Aprendiz</option>
                             {% else %}
-                            <option value="Aprendiz">Aprendiz</option>
+                            <option value="A">Aprendiz</option>
                             {% endif %}
 
                         </select>
                     </div>
                 </div>
                 <div class="selectContainer">
-                    <label for="estadoUsuario" class="labelformselect" name="estadoUsuario">Estado Usuario</label>
+                    <label for="estadoUsuario" class="labelformselect">Estado Usuario</label>
                     <div>
-                        <select class="selector" name="estadoUsuario" id="estadoUsuario">
+                        <select class="selector" name="estadoUsuario" id="is_active">
 
-                            {% if user.estadoUsuario == 'Activo' %}
+                            {% if user.is_active == 'Activo' %}
                             <option value="A" selected>Activo</option>
                             {% else %}
                             <option value="A">Activo</option>
                             {% endif %}
 
-                            {% if user.estadoUsuario == 'Inactivo' %}
+                            {% if user.is_active == 'Inactivo' %}
                             <option value="I" selected>Inactivo</option>
                             {% else %}
                             <option value="I">Inactivo</option>
@@ -172,27 +174,22 @@
                         </select>
                     </div>
                 </div>
-
-
-            </div>
-            <div class="container-1">
                 <div class="cantidadContainer">
-                    <input type="number" class="inputcantidad" name="duracionContrato" value="{{user.duracionContrato}}"
+                    <input type="text" class="inputcantidad" name="duracionContrato" value="{{user.duracionContrato}}"
                         id="duracionContrato">
                     <label for="duracionContrato" class="labelcantidad">Duracion</label>
 
                 </div>
+                <!--
                 <div class="inputContainer">
-                    <input type="password" class="inputform" placeholder="Contraseña" name="contraSena"
-                        value="{{user.contraSena}}" required>
+                    <input type="password" class="inputform" placeholder="Contraseña" name="contraSena"  required>
                     <label for="contraSena" class="labelform">Contraseña</label>
                 </div>
                 <div class="inputContainer">
-                    <input type="password" class="inputform" placeholder="a" value="{{user.validacionContraSena}}"
-                        required>
-                    <label for="validacionContraSena" class="labelform" name="validacionContraSena">Repetir
-                        Contraseña</label>
+                    <input type="password" class="inputform" placeholder="a" name="validacionContraSena" required>
+                    <label for="validacionContraSena" class="labelform" name="validacionContraSena">Repetir Contraseña</label>
                 </div>
+                -->
                 <div class="selectorimagen">
                     <label for="foto" class="">Adjuntar Foto</label>
                     <input type="file" name="foto" class="inputsubirfoto">
@@ -200,13 +197,23 @@
             </DIV>
             <div class="container-botones">
 
-                <button type="submit" class="submitBtn"><span id="span">GUARDAR</span></button>
-                <button type="submit" class="submitBtn"><span>CANCELAR</span></button>
-
+                <button type="submit" class="submitBtn"><span id="span">GUARDAR</span>
+                </button>
+                
+                <button type="button" class="submitBtn" id="cancelBtn"><span>CANCELAR</span>
+                </button>
             </div>
-
         </form>
 
     </div>
-</section>
+
+
+{% block extrajs %}
+<script>
+    document.getElementById("cancelBtn").onclick = function() {
+      window.location.href = "/usuariodash/";
+    };
+</script>
+{% endblock extrajs %}
+    
 {% endblock %}

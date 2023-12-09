@@ -16,7 +16,9 @@
     {% endblock extrastyle %}
 
 
-    {% block extrascript %} {% endblock extrascript %}
+    {% block extrascript %}
+    
+    {% endblock extrascript %}
 
 
 
@@ -32,11 +34,7 @@
                 menu
             </span>
             <div class="usuario">
-
-                <div>
-                    <p>Usuario</p>
-                    <p>Super Administrado</p>
-                </div>
+            
                 <img src="{% static 'img/usuario.png' %}" alt="Usuario">
             </div>
 
@@ -55,25 +53,16 @@
                     </div>
 
                     <ul class="menu" id="menu"> <!-- Cambiado el ID a menu -->
-                        <li><a href="{% url 'homedash' %}"><span class="material-icons-sharp">home</span>
-                                <p>Inicio</p>
-                            </a></li>
-                        <li><a href="#"><span class="material-icons-sharp">supervisor_account</span>
-                                <p>Usuarios</p>
-                            </a></li>
-                        <li><a href="#"><span class="material-icons-sharp">inventory</span>
-                                <p>Inventario</p>
-                            </a></li>
-                        <li><a href="#"><span class="material-icons-sharp">category</span>
-                                <p>Elementos</p>
-                            </a></li>
-                        <li><a href="#"><span class="material-icons-sharp">calendar_month</span>
-                                <p>Calendario</p>
-                            </a></li>
+                        <li><a href="{% url 'homedash' %}"><span class="material-icons-sharp">home</span><p>Inicio</p> </a></li>
+                        <li><a href="{% url 'usuariodash' %}"><span class="material-icons-sharp">supervisor_account</span><p>Usuarios</p> </a></li>
+                        <li><a href="{% url 'inventariodash' %}"><span class="material-icons-sharp">inventory</span><p>Inventario</p> </a></li>
+                        <li><a href="{% url 'elementosdash' %}"><span class="material-icons-sharp">category</span><p>Elementos</p> </a></li>
+                        <li><a href="{% url 'transacciondash' %}"><span class="material-icons-sharp">swap_horiz</span><p>Transacciones</p></a></li>
+                        <li><a href="{% url 'calendario' %}"><span class="material-icons-sharp">calendar_month</span><p>Calendario</p></a></li>
                     </ul>
 
                     <ul class="menu">
-                        <li><a href="#" class="salir" style="color: red;"><span style="color: red;"
+                        <li><a href="{%url 'usu:logout'%}" class="salir" style="color: red;"><span style="color: red;"
                                     class="material-icons-sharp">logout</span>
                                 <p>Salir</p>
                             </a></li>
@@ -82,16 +71,14 @@
 
 
                 </a>
-                <div class="redes-sociales">
-                    <a href="https://www.facebook.com/senacditidosquebradas/?locale=es_LA" target="_blank"><i
-                            class="fab fa-facebook-square" style="color: blue;"></i></a>
-                    <a href="https://www.instagram.com/bienestaralaprendizcditi/?hl=es" target="_blank"><i
-                            class="fab fa-instagram-square" style="color: #e697fa;"></i></a>
-                    <a href="https://twitter.com/senacditi/status/913841534172368897?lang=es" target="_blank"><i
-                            class="fab fa-twitter-square" style="color: aqua;"></i></a>
+                
+            </div>
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/senacditidosquebradas/?locale=es_LA" target="_blank"><img src="{% static 'img/facebook.png' %}" alt=""></a>
 
-                </div>
+                <a href="https://www.instagram.com/bienestaralaprendizcditi/?hl=es" target="_blank"><img src="{% static 'img/instagram.png' %}" alt=""></a>
 
+                <a href="https://twitter.com/senacditi/status/913841534172368897?lang=es" target="_blank"><img src="{% static 'img/gorjeo.png' %}" alt=""></a>
             </div>
 
 
@@ -103,8 +90,11 @@
             </div>
 
             <div class="perfil">
-                <p>Bievenido <br>
-                    Administrador</p>
+                <p>
+                    {% if request.user.is_authenticated %}
+                    {{ request.user.nombres }} {{ request.user.apellidos }} <br>
+                    {{ request.user.cuentadante }}</p>
+                    {% endif %}
                 <div class="bola">
 
                 </div>
@@ -157,17 +147,8 @@
                     text: messageText,
                     icon: 'warning',
                     confirmButtonText: confirmButtonText,
-                    showCancelButton: true,
                 })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire(
-                                'Eliminado!',
-                                'Eliminado Correctamente.',
-                                'success'
-                            )
-                        }
-                    });
+                    ;
 
             } else if (messageType === "error") {
                 Swal.fire({

@@ -8,6 +8,7 @@
     text-decoration: none;
 }
 
+
 .base{
     display: flex;
     position: relative;
@@ -29,6 +30,10 @@
     display: flex;
     justify-content: end;
     width: 100%;
+}
+
+.usuariotexto p{
+    color: #000;
 }
 
 .barra-lateral{
@@ -172,15 +177,20 @@
     
     .redes-sociales{
         width: 100%;
+        z-index: 99;
         position: absolute;
         display: flex;
-        top: 90%;
-        left: 30px;
+        justify-content: end;
+        align-items: end;
+        right: 100px;
+        bottom:10px;
+        
     }
     
-    .redes-sociales i{
+    .redes-sociales img{
         margin:0 20px;
-        font-size: 25px;
+        width: 18px;
+
         transition: all 0.5s ;
     }
     
@@ -211,10 +221,6 @@
     }
     .active{
         width: 250px;
-    }
-
-    .redes-sociales{
-        display: none;
     }
   
     .active .menu li a p{

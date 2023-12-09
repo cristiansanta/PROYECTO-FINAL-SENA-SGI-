@@ -1,31 +1,32 @@
-.section{
-  width: 98%;
-  box-shadow:  2px 5px 5px 4px #b3b3b3;
-}
-
 
 /*Estilos del Formulario Registro Usuarios*/
 /* Sitúa el formulario en el centro tanto horizontal como verticalmente. Establece su altura al 100% de la altura de la ventana */
 
 .signupFrm {
+  margin: 30px;
+  width: 93%;
+  background-color: white;
+  position: relative;
   display: flex;
-  justify-content: center;
+  justify-content:center;
   align-items: center;
-  height: 100%;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
 }
 
 .form {
-background-color: white;
-width: 100%;
-border-radius: 8px;
-padding: 20px 10px;
-box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  
 }
 
 .title {
 font-size: 2.5rem;
 font-weight: 900;
-margin-bottom: 2rem;
+margin-bottom: 4rem;
 text-align: center;
 }
 
@@ -35,20 +36,23 @@ text-align: center;
   margin-bottom: 1rem;
   align-items: center;
   
+  
 }
 
 .inputContainer {
 position: relative;
 height: 3rem;
-width: 24rem;
+width: 18rem;
 margin-bottom: 17px;
+margin-right: 3rem;
 }
 
 .fechaContainer {
 position: relative;
 height: 3rem;
-width: 10rem;
+width: 8rem;
 margin-bottom: 17px;
+margin-right: 3rem;
 }
 /* Estilo input formularios */
 
@@ -173,15 +177,9 @@ color: rgb(0, 0, 0);
     margin: 1rem;
   }
 
-
-
-
-
 /* Para 1300px */  
 @media (max-width: 1270px) {
-  .section{
-      width: 98%;      
-  }
+
   .inputform:focus + .labelform {
     font-size: 1rem;
     

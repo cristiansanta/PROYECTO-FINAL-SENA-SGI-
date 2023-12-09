@@ -1,21 +1,21 @@
 
-
 /*Estilos del Formulario Registro Usuarios*/
 /* Sitúa el formulario en el centro tanto horizontal como verticalmente. Establece su altura al 100% de la altura de la ventana */
 
 .signupFrm {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 80vh;
 }
 
 .form {
 background-color: white;
-width: 100%;
 border-radius: 8px;
 padding: 20px 10px;
 box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+width: 98%;
 }
 
 .title {
@@ -115,8 +115,6 @@ margin-bottom: 17px;
   z-index: 0;
 }
 
-
-
 /*Estilos BOtones */
 
 .container-botones{
@@ -129,17 +127,17 @@ margin-bottom: 17px;
   margin: 0 10px;
   padding: 15px 30px;
   border: none;
-  background-color: #238276;
-  color: white;
+  color: #ffffff;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
-  margin-top: 30px;
-  
+  font-weight: 800;
+  margin-top: -5px;
+  background-color: #238276 !important;
 }
 
 .submitBtn:hover {
-  background-color: #1689ef;
+  background-color: #1689ef !important;
   transform: translateY(-2px);
 }
 

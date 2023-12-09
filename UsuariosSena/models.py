@@ -10,10 +10,21 @@ from .choices import (
     tipoId,
     tipoContratos,
 )
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import User
+
+
+# Create your models here.
 
 
 class UsuariosSenaManager(BaseUserManager):
     def create_user(self, numeroIdentificacion, email, password=None, **extra_fields):
+        user = self.model(
+            numeroIdentificacion=numeroIdentificacion,
+            email=self.normalize_email(email),
+            **extra_fields,
+        )
         user = self.model(
             numeroIdentificacion=numeroIdentificacion,
             email=self.normalize_email(email),
@@ -26,6 +37,9 @@ class UsuariosSenaManager(BaseUserManager):
     def create_superuser(self, numeroIdentificacion, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault(
+            "cuentadante", "superAdmin"
+        )  # Predeterminamos el tipo cuentadante al crear super User que quede como SuperAdmin en el aplicativo
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
@@ -39,8 +53,10 @@ class UsuariosSena(AbstractUser):
     nombres = models.CharField(max_length=25)
     apellidos = models.CharField(max_length=25)
     tipoIdentificacion = models.CharField(max_length=25, choices=tipoId, default="CC")
-    numeroIdentificacion = models.CharField(max_length=25, unique=True)
-    email = models.EmailField(max_length=25)
+    numeroIdentificacion = models.CharField(
+        max_length=25, unique=True, primary_key=True
+    )
+    email = models.EmailField(max_length=35)
     celular = models.CharField(max_length=10)
     rol = models.CharField(max_length=25, choices=roles, default="I")
     cuentadante = models.CharField(
@@ -49,11 +65,11 @@ class UsuariosSena(AbstractUser):
     tipoContrato = models.CharField(max_length=25, choices=tipoContratos, default="P")
     is_active = models.BooleanField(default=1)
     duracionContrato = models.CharField(max_length=25)
-    password = models.CharField(max_length=30, default="")
+    password = models.CharField(max_length=100, default="")
+    recovery_token = models.CharField(max_length=30, blank=True, null=True)
     fotoUsuario = models.ImageField(
         upload_to="usuarioFoto/", blank=True, null=True
     )  # Campo para la foto
-    id = models.BigAutoField(primary_key=True)
 
     objects = UsuariosSenaManager()
 
@@ -65,87 +81,152 @@ class UsuariosSena(AbstractUser):
     USERNAME_FIELD = "numeroIdentificacion"
 
 
-class ElementosDevolutivo(models.Model):
-    fechaElemento = models.DateField(auto_now_add=True)  # Manera 2 de hacerlo
-    nombreElemento = models.CharField(max_length=25)
-    categoriaElemento = models.CharField(
-        max_length=25, choices=categoriaElemento, default="C"
-    )
-    estadoElemento = models.CharField(max_length=25, choices=estado, default="D")
-    descripcionElemento = models.CharField(max_length=25)
-    observacionElemento = models.CharField(max_length=25)
-
-    cantidadElemento = models.IntegerField()
-    valorUnidadElemento = models.IntegerField()
-    valorTotalElemento = models.IntegerField(blank=True, null=True)
-    serial = models.CharField(max_length=25, primary_key=True)
-    facturaElemento = models.ImageField(
-        upload_to="facturaElemento/", blank=True, null=True
-    )  # Campo para la foto
+# ----Informacion General Producto (Repetitiva + Sumatoria Productos)---------------------------------------------------------------------------
+class ProductosInventarioDevolutivo(models.Model):
+    nombre = models.CharField(max_length=75)
+    categoria = models.CharField(max_length=25, choices=categoriaElemento, default="C")
+    estado = models.CharField(max_length=25, choices=estado, default="D")
+    descripcion = models.CharField(max_length=255)
+    valor_unidad = models.IntegerField()
+    disponibles = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"Elemento devolutivo {self.nombreElemento}, unidades disponibles {self.cantidadElemento}"
+        return self.nombre
 
 
-class ElementosConsumible(models.Model):
-    fechaAdquisicion = models.DateField(auto_now_add=True)
+# ----Informacion única Para El Inventario De Cada Unidad
+class InventarioDevolutivo(models.Model):
+    producto = models.ForeignKey(
+        "ProductosInventarioDevolutivo", on_delete=models.CASCADE
+    )
+    fecha_Registro = models.DateField(auto_now_add=True)
+    observacion = models.TextField()
+    serial = models.CharField(max_length=25, primary_key=True)
+    factura = models.ImageField(upload_to="facturaElemento/", blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.serial}"
+
+
+# -------------------------NORMALIZACION TABLA (ElementosConsumible)------------------------------------------------------
+class ProductosInventarioConsumible(models.Model):
     nombreElemento = models.CharField(max_length=25)
     categoriaElemento = models.CharField(
-        max_length=25, choices=[("D", "Devolutivo"), ("C", "Consumible")], default="C"
+        max_length=25,
+        choices=[("Devolutivo", "Devolutivo"), ("Consumible", "Consumible")],
     )
     estadoElemento = models.CharField(
-        max_length=25, choices=[("D", "Disponible"), ("A", "Agotado")], default="D"
+        max_length=25,
+        choices=[
+            ("Garantia", "Garantia"),
+            ("Baja", "Baja"),
+            ("Disponible", "Disponible"),
+            ("Prestamo", "Prestamo"),
+        ],
+        default="Disponible",
     )
     descripcionElemento = models.CharField(max_length=25)
-    observacionElemento = models.CharField(max_length=25)
-
-    cantidadElemento = models.IntegerField()
     costoUnidadElemento = models.IntegerField()
-    costoTotalElemento = models.IntegerField(blank=True, null=True)
-    lote = models.CharField(max_length=25)
-    facturaElemento = models.ImageField(
-        upload_to="facturaElemento/", blank=True, null=True
-    )
-
-    def __str__(self):
-        return f"Elemento consumible {self.nombreElemento}, unidades disponibles {self.cantidadElemento}"
-
-
-class Prestamo(models.Model):
-    fechaEntrega = models.DateField()
-    fechaDevolucion = models.DateField()
-    nombreEntrega = models.CharField(max_length=25)
-    nombreRecibe = models.CharField(max_length=25, null=False)
-    nombreElemento = models.CharField(max_length=25)
-    estado = models.CharField(max_length=10, default="ACTIVO")
-    serialSenaElemento = models.ForeignKey(
-        ElementosDevolutivo, on_delete=models.CASCADE, related_name="prestamos"
-    )
-    cantidadElemento = models.IntegerField()
-    valorUnidadElemento = models.IntegerField()
-    valorTotalElemento = models.IntegerField(blank=True, null=True)
-    firmaDigital = models.ImageField(
-        upload_to="firmaDigital/", blank=True, null=True
-    )  # Campo para la foto
-    observacionesPrestamo = models.CharField(max_length=25)
+    disponible = models.IntegerField(default=0)
     id = models.BigAutoField(primary_key=True)
 
     def __str__(self):
-        return f"Prestamo devolutivo de {self.cantidadElemento} unidades de {self.nombreElemento}"
+        return self.nombreElemento
+
+
+
+class InventarioConsumible(models.Model):
+    productoConsumible = models.ForeignKey(
+        ProductosInventarioConsumible, on_delete=models.CASCADE
+    )
+    fechaAdquisicion = models.DateField(auto_now_add=True)
+    cantidadElemento = models.IntegerField()
+    costoTotalElemento = models.IntegerField(blank=True, null=True)
+    observacionElemento = models.CharField(max_length=25)
+    facturaElemento = models.ImageField(
+        upload_to="facturaElemento/", blank=True, null=True
+    )
+    id = models.BigAutoField(primary_key=True)
+
+    def __str__(self):
+        return f"Detalle de {self.productoConsumible.nombreElemento}, Fecha de Adquisición: {self.fechaAdquisicion}"
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+class Prestamo(models.Model):
+    fechaEntrega = models.DateField()
+    fechaDevolucion = models.DateField()
+    # SE PODRIA HACER FILTRADO Y BUSCAR EN ESTE CAMPO YA SEA POR ID O NAME - IT'S OK
+    nombreEntrega = models.ForeignKey(
+        "UsuariosSena",
+        related_name="prestamos_entregados",
+        on_delete=models.SET_NULL,
+        null=True,
+        to_field="numeroIdentificacion",
+    )
+    nombreRecibe = models.ForeignKey(
+        "UsuariosSena",
+        related_name="prestamos_recibidos",
+        on_delete=models.SET_NULL,
+        null=True,
+        to_field="numeroIdentificacion",
+    )
+
+    serialSenaElemento = models.ForeignKey(
+        "InventarioDevolutivo", on_delete=models.CASCADE, related_name="prestamos"
+    )
+    serialSenaElemento = models.ForeignKey(
+        "InventarioDevolutivo", on_delete=models.CASCADE, related_name="prestamos"
+    )
+
+    # Método para finalizar préstamo y actualizar inventario
+    def finalizar_prestamo(self):
+        self.estadoPrestamo = "FINALIZADO"
+        producto = self.serialSenaElemento.producto
+        producto.disponibles += 1
+        producto.save()
+        self.save()
+
+    estado_actualizado = models.BooleanField(default=False)
+    estadoPrestamo = models.CharField(max_length=25, default="ACTIVO")
+    valorUnidadElemento = models.IntegerField()
+    firmaDigital = models.ImageField(upload_to="firmaDigital/", blank=True, null=True)
+    observacionesPrestamo = models.TextField()
+    observacionesEntrega = models.TextField(blank=True, null=False)
+
+    def __str__(self):
+        return f"Prestamo devolutivo del producto {self.serialSenaElemento.producto.nombre}"
+
+    class Meta:
+        verbose_name = "Préstamo"
+        verbose_name_plural = "Préstamos"
+
 
 
 class EntregaConsumible(models.Model):
     fecha_entrega = models.DateField()
-    responsable_Entrega = models.CharField(max_length=25)
-    nombre_solicitante = models.CharField(max_length=100)
-    nombreElemento = models.CharField(max_length=25)
-    serialSenaElemento = models.CharField(max_length=100)
+    responsable_Entrega = models.ForeignKey(
+        "UsuariosSena",
+        related_name="entregas_realizadas",
+        on_delete=models.SET_NULL,
+        null=True,
+        to_field="numeroIdentificacion",
+    )
+    nombre_solicitante = models.ForeignKey(
+        "UsuariosSena",
+        related_name="solicitudes_recibidas",
+        on_delete=models.SET_NULL,
+        null=True,
+        to_field="numeroIdentificacion",
+    )
+
+    idC = models.ForeignKey(
+        "InventarioConsumible", on_delete=models.CASCADE, related_name="entregas"
+    )
+
     cantidad_prestada = models.PositiveIntegerField()
     observaciones_prestamo = models.TextField()
-    firmaDigital = models.ImageField(
-        upload_to="firmaDigital/", blank=True, null=True
-    )  # Campo para la foto
-    id = models.BigAutoField(primary_key=True)
+    firmaDigital = models.ImageField(upload_to="firmaDigital/", blank=True, null=True)
 
     def __str__(self):
         return self.nombreElemento

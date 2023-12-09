@@ -6,7 +6,7 @@
 
 
 {% block extrastyle %}
-<link rel="stylesheet" href="{% static 'css/superAdmin/stylesregusuario1.css' %}">
+<link rel="stylesheet" href="{% static 'css/superAdmin/stylesregusuario.css' %}">
 {% endblock extrastyle %}
 
 
@@ -27,11 +27,11 @@
 
             <div class="container-1">
                 <div class="inputContainer">
-                    <input type="text" class="inputform" placeholder="a" name="nombres" id="nombres" required>
+                    <input type="text" class="inputform" pattern="^\S.*$" placeholder="a" name="nombres" id="nombres" required>
                     <label for="nombres" class="labelform">Nombres</label>
                 </div>
                 <div class="inputContainer">
-                    <input type="text" class="inputform" name="apellidos" placeholder="a" id="apellidoo" required>
+                    <input type="text" class="inputform" pattern="^\S.*$" name="apellidos" placeholder="a" id="apellidoo" required>
                     <label for="apellidos" class="labelform" name="apellidos">Apellidos</label>
                 </div>
                 <div class="selectContainer">
@@ -46,25 +46,24 @@
                     </div>
                 </div>
                 <div class="inputContainer">
-                    <input type="text" class="inputform" name="numeroIdentificacion" placeholder="a"
+                    <input type="text" class="inputform" pattern="^\S.*$" name="numeroIdentificacion" placeholder="a"
                         id="numeroIdentificacion" required>
                     <label for="numeroIdentificacion" class="labelform" name="numeroIdentificacion">Numero Id</label>
                 </div>
             </div>
             <div class="container-1">
                 <div class="inputContainer">
-                    <input type="email" class="inputform" placeholder="a" name="email" id="email" required>
+                    <input type="email" class="inputform" pattern="^\S.*$" placeholder="a" name="email" id="email" required>
                     <label for="email" class="labelform">Correo Sena</label>
                 </div>
                 <div class="inputContainer">
-                    <input type="text" class="inputform" placeholder="a" name="celular" id="celular" required>
+                    <input type="text" class="inputform" pattern="^\S.*$" placeholder="a" name="celular" id="celular" required>
                     <label for="celular" class="labelform">Celular</label>
                 </div>
                 <div class="selectContainer">
                     <label for="rol" class="labelformselect">Rol</label>
                     <div>
                         <select class="selector" name="rol" id="rol">
-                            <option value="superAdmin">SuperAdmin</option>
                             <option value="I">Instructor</option>
                             <option value="M">Monitor</option>
                         </select>
@@ -74,8 +73,8 @@
                     <label for="cuentadante" class="labelformselect">Tipo Cuentadante</label>
                     <div>
                         <select class="selector" name="cuentadante" id="cuentadante">
-                            <option value="adminS">adminSolidario</option>
                             <option value="adminD">adminDirecto</option>
+                            <option value="adminS">adminSolidario</option>
                             <option value="monitor">monitor</option>
                         </select>
                     </div>
@@ -105,14 +104,19 @@
             </div>
             <div class="container-1">
                 <div class="inputContainer">
-                    <input type="text" class="inputform" name="duracionContrato" id="duracionContrato">
+                    <input type="text" class="inputform" pattern="^\S.*$" name="duracionContrato" id="duracionContrato">
                     <label for="duracionContrato" class="labelform">Duracion Contrato</label>
 
                 </div>
                 <div class="inputContainer">
-                    <input type="password" class="inputform" placeholder="a" name="password" required>
+                    <input type="password" class="inputform" pattern="^\S.*$" placeholder="a" name="password" required>
                     <label for="password" class="labelform">Contraseña</label>
                 </div>
+                <div class="inputContainer">
+                    <input type="password" class="inputform" pattern="^\S.*$" placeholder="a" name="password" required>
+                    <label for="password" class="labelform">Confirmar Contraseña</label>
+                </div>
+
                 <div class="selectorimagen">
                     <label for="fotoUsuario" class="">Adjuntar Foto</label>
                     <input type="file" name="fotoUsuario" class="inputsubirfoto">
@@ -125,10 +129,15 @@
             <div class="container-botones">
 
                 <button type="submit" class="submitBtn"><span id="span">GUARDAR</span></button>
-                <button type="submit" class="submitBtn"><span>CANCELAR</span></button>
+                <button type="button" class="submitBtn" id="cancelBtn"><span>CANCELAR</span></button>
 
             </div>
-
+            <!--script boton cancelar redirige dashboard -->
+            <script>
+                document.getElementById("cancelBtn").onclick = function() {
+                  window.location.href = "/usuariodash/";
+                };
+              </script>
         </form>
 
     </div>

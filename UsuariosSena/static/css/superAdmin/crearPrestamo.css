@@ -1,22 +1,17 @@
-.section {
-  width: 98%;
-  box-shadow: 2px 5px 5px 4px #b3b3b3;
-}
-
-
-/*Estilos del Formulario Registro Usuarios*/
-/* Sitúa el formulario en el centro tanto horizontal como verticalmente. Establece su altura al 100% de la altura de la ventana */
 
 .signupFrm {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  
+  
 }
 
 .form {
+  margin: 10px;
   background-color: white;
-  width: 100%;
+  width: 98%;
+  height: auto;
   border-radius: 8px;
   padding: 20px 10px;
   box-shadow: 0 10px 25px rgba(92, 99, 105, .2);

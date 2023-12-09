@@ -23,6 +23,29 @@ var confirmButtonText = "Aceptar";
             icon: 'error',
             confirmButtonText: confirmButtonText
         });
+
+    } else if (messageType === "confirm") {
+        Swal.fire({
+            title: "¿Estás seguro de inhabilitar el elemento?",
+            text: "El elemento sera dado de baja",
+            icon: "question",
+            showCancelButton : true,
+            cancelButtonText : "Cancelar",
+            confirmButtonText : "Inhabilitar",
+            reverseButtons : true,
+            confirmButtonColor : "#fc7323",
+            iconColor : "#fc7323",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Éxito',
+                text: messageText,
+                icon: 'success',
+                confirmButtonText: confirmButtonText
+              });
+            }
+        });
+
     } else {
         // Otro tipo de mensaje, personalízalo según tus necesidades
         Swal.fire({
